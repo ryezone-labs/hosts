@@ -1,0 +1,15 @@
+---
+# tasks file for hosts
+
+- name: Set hostname
+  hostname:
+    name: "{{hostname}}.{{ryezone_labs_top_level_domain}}"
+  become: yes
+  when: hostname
+
+- name: Set hosts file
+  template:
+    src: hosts.j2
+    dest: /etc/hosts
+  become: yes
+  when: hostname
