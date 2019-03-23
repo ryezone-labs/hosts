@@ -3,13 +3,13 @@
 
 - name: Set hostname
   hostname:
-    name: "{{hostname}}.{{ryezone_labs_top_level_domain}}"
+    name: "{{ hosts_hostname }}.{{ hosts_domain }}"
   become: yes
-  when: hostname
+  when: hosts_hostname is defined
 
 - name: Set hosts file
   template:
     src: hosts.j2
     dest: /etc/hosts
   become: yes
-  when: hostname
+  when: hosts_hostname is defined
