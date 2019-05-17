@@ -1,15 +1,26 @@
 ---
 # tasks file for hosts
+- name: Ensure hosts_hostname is not None
+  assert:
+    that:
+      - hosts_hostname is defined
+    fail_msg: "hosts_hostname is undefined"
+    success_msg: "hosts_hostname is defined: {{hosts_hostname}}"
+
+- name: Ensure hosts_domain is not None
+  assert:
+    that:
+      - hosts_domain is defined
+    fail_msg: "hosts_domain is undefined"
+    success_msg: "hosts_domain is defined: {{hosts_domain}}"
 
 - name: Set hostname
   hostname:
     name: "{{ hosts_hostname }}.{{ hosts_domain }}"
   become: yes
-  when: hosts_hostname is defined
 
 - name: Set hosts file
   template:
     src: hosts.j2
     dest: /etc/hosts
   become: yes
-  when: hosts_hostname is defined
